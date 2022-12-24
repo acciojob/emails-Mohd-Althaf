@@ -11,7 +11,7 @@ public class Gmail extends Email {
     //Inbox: Stores mails. Each mail has date (Date), sender (String), message (String). It is guaranteed that message is distinct for all mails.
     //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
 
-    int Inboxsize=0,Trashsize=0;
+
     ArrayList<Emailmsg> Inbox = new ArrayList<>();
     ArrayList<Emailmsg> Trash = new ArrayList<>();
 
@@ -26,25 +26,21 @@ public class Gmail extends Email {
         // It is guaranteed that:
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
-        if(Inboxsize>inboxCapacity){
+        if(Inbox.size()==inboxCapacity){
             Trash.add(Inbox.get(0));
             Inbox.remove(0);
-            Trashsize++;
-            Inboxsize--;
         }
         Inbox.add(new Emailmsg(message,date,sender));
-        Inboxsize++;
     }
 
     public void deleteMail(String message){
         // Each message is distinct
         // If the given message is found in any mail in the inbox, move the mail to trash, else do nothing
-        for(int i=0;i<Inboxsize;i++){
+        for(int i=0;i<Inbox.size();i++){
             if(Inbox.get(i).message.equals(message)){
                 Emailmsg deleted = Inbox.remove(i);
                 Trash.add(deleted);
-                Trashsize++;
-                Inboxsize--;
+                break;
             }
         }
     }
@@ -52,15 +48,15 @@ public class Gmail extends Email {
     public String findLatestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the latest mail present in the inbox
-        if(Inboxsize==0)
+        if(Inbox.size()==0)
             return "null";
-        return Inbox.get(Inboxsize-1).message;
+        return Inbox.get(Inbox.size()-1).message;
     }
 
     public String findOldestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the oldest mail present in the inbox
-        if(Inboxsize==0)
+        if(Inbox.size()==0)
             return "null";
         return Inbox.get(0).message;
     }
@@ -69,28 +65,30 @@ public class Gmail extends Email {
         //find number of mails in the inbox which are received between given dates
         //It is guaranteed that start date <= end date
         int count = 0;
-        for(int i=0;i<Inboxsize;i++){
+        for(int i=0;i<Inbox.size();i++){
             Emailmsg msg = Inbox.get(i);
             if(msg.Date.after(start) && msg.Date.before(end))
                 count++;
+            if( msg.Date.equals(start) || msg.Date.equals(end))
+                count++;
+
         }
         return count;
     }
 
     public int getInboxSize(){
         // Return number of mails in inbox
-        return Inboxsize;
+        return Inbox.size();
     }
 
     public int getTrashSize(){
         // Return number of mails in Trash
-        return Trashsize;
+        return Trash.size();
     }
 
     public void emptyTrash(){
         // clear all mails in the trash
         Trash.clear();
-        Trashsize = 0;
     }
 
     public int getInboxCapacity() {
