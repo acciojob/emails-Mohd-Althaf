@@ -69,8 +69,8 @@ public class Gmail extends Email {
             Emailmsg msg = Inbox.get(i);
             if(msg.Date.after(start) && msg.Date.before(end))
                 count++;
-            if( msg.Date.equals(start) || msg.Date.equals(end))
-                count++;
+//            if( msg.Date.equals(start) || msg.Date.equals(end))
+//                count++;
 
         }
         return count;
@@ -100,9 +100,9 @@ public class Gmail extends Email {
         public Date Date;
         public String sender;
 
-        public Emailmsg(String message, java.util.Date date, String sender) {
+        public Emailmsg(String message, Date date, String sender) {
             this.message = message;
-            Date = date;
+            this.Date = date;
             this.sender = sender;
         }
     }
