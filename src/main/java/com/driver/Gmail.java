@@ -95,10 +95,10 @@ public class Gmail extends Email {
         // Return the maximum number of mails that can be stored in the inbox
         return this.inboxCapacity;
     }
-    class Emailmsg{
-        String message;
-        Date Date;
-        String sender;
+    public class Emailmsg{
+        public String message;
+        public Date Date;
+        public String sender;
 
         public Emailmsg(String message, java.util.Date date, String sender) {
             this.message = message;
