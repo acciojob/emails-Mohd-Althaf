@@ -34,7 +34,7 @@ public class Workspace extends Gmail{
         Collections.sort(calendar, Comparator.comparing(Meeting::getStartTime));
         int prev = 0;
         for(int i=1;i<calendar.size();i++){
-            if(calendar.get(i).getStartTime().compareTo(calendar.get(prev).getEndTime())>0){
+            if(calendar.get(i).getStartTime().isAfter(calendar.get(prev).getEndTime())){
                 maxmeets++;
                 prev = i;
             }
